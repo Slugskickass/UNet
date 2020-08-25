@@ -11,10 +11,10 @@ class DoubleConv(nn.Module):
         if not mid_channels:
             mid_channels = out_channels
         self.double_conv = nn.Sequential(
-            nn.Conv2d(in_channels, mid_channels, kernel_size=3, padding=0),
+            nn.Conv2d(in_channels, mid_channels, kernel_size=3, padding=1),
             nn.BatchNorm2d(mid_channels),
             nn.ReLU(inplace=True),
-            nn.Conv2d(mid_channels, out_channels, kernel_size=3, padding=0),
+            nn.Conv2d(mid_channels, out_channels, kernel_size=3, padding=1),
             nn.BatchNorm2d(out_channels),
             nn.ReLU(inplace=True)
         )
@@ -61,7 +61,7 @@ class UpAlong(nn.Module):
 
         diffY = a2.size()[2] - a1.size()[2]
         diffX = a2.size()[3] - a1.size()[3]
-
+# This causes a problem
         a2 = F.pad(a2, [-diffX // 2, diffX // 2 - diffX,
                         -diffY // 2, diffY // 2 - diffY])
 
